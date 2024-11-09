@@ -90,6 +90,7 @@ function ConsignmentTable() {
                 hover
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
+                style={{ position: "relative" }}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -104,15 +105,32 @@ function ConsignmentTable() {
                 <TableCell>{val.consignor}</TableCell>
                 <TableCell>{val.consignee}</TableCell>
                 <TableCell>{val.location}</TableCell>
-                <TableCell>{val.transporter}</TableCell>
-                <TableCell>
-                  <div
-                    className={
-                      hoveredIndex === index
-                        ? "actions-visible"
-                        : "actions-hidden"
-                    }
+                <TableCell style={{ position: "relative" }}>
+                <div
+                    style={{
+                      display: hoveredIndex === index ? "none" : "block",
+                      whiteSpace: "nowrap",
+                      position: "relative",
+                
+                    }}
+                  >{val.transporter}
+                  </div>
+                  </TableCell>
+
+
+                <TableCell style={{ position: "relative" }}>
+                <div
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      display: hoveredIndex === index ? "flex" : "none",
+                      gap: "5px",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      height: "20%",
+                    }}
                   >
+                 
                     <Button id="delete-button">
                       <MdDeleteOutline />
                     </Button>

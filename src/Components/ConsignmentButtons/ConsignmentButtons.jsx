@@ -3,7 +3,7 @@ import { CiImport } from "react-icons/ci";
 import { CiExport } from "react-icons/ci";
 import { CgSortAz } from "react-icons/cg";
 import { CiFilter } from "react-icons/ci";
-import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Button, ButtonGroup, Typography, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import FilterList from '@mui/icons-material/FilterList';
@@ -50,17 +50,17 @@ function ConsignmentButton() {
       setActiveButton(title);
     };
   
-    // const [filteredData, setFilteredData] = useState(data);
-    // const [filter, setFilter] = useState("");
+    const [filteredData, setFilteredData] = useState("");
+    const [filter, setFilter] = useState("");
   
-    // // Filter function
-    // const applyFilter = () => {
-    //   const newFilteredData = data.filter((item) => item.evnt === filter);
-    //   setFilteredData(newFilteredData);
-    // };
+    // Filter function
+    const applyFilter = () => {
+      const newFilteredData = data.filter((item) => item.evnt === filter);
+      setFilteredData(newFilteredData);
+    };
   
-    // Count of filtered records
-    // const filteredCount = filteredData.length;
+    
+    const filteredCount = filteredData.length;
 
     return (
     <>
@@ -72,10 +72,7 @@ function ConsignmentButton() {
           marginBottom: "10px",
         }}
       >
-        <ButtonGroup
-          variant="contained"
-          aria-label="outlined primary button group"
-        >
+        <div style={{ display: "flex" }}>
           <Link to="/consignment-table-2" style={{ textDecoration: "none" }}>
             <Button id="assigned" onClick={() => handleButtonClick("Assigned")} style={{
               background: activeButton === "Assigned" ? "green" : "white", 
@@ -88,22 +85,30 @@ function ConsignmentButton() {
               color: activeButton === "Unassigned" ? "white" : "grey", 
             }}>Unassigned</Button>
           </Link>
-        </ButtonGroup>
+        </div>
         <div style={{ display: "flex", alignItems: "center" }}>
+        <Tooltip title ="Import">
           <Button id="import">
             <CiImport />
           </Button>
+          </Tooltip>
+          <Tooltip title="Export">
           <Button id="export">
             <CiExport />
           </Button>
+          </Tooltip>
+          <Tooltip title="Sort">
           <Button id="sort">
             <CgSortAz />
           </Button>
+          </Tooltip>
           <div id="filter-button">
-             <Button id="filter" >{/*onClick={applyFilter} variant="contained" startIcon={<FilterList />} */}
+            <Tooltip title="Filter">
+             <Button id="filter" onClick={applyFilter} variant="contained" >
               <CiFilter />
-              {/* {filteredCount} */}
+              {filteredCount}
             </Button>
+            </Tooltip>
           </div>
           <Button id="rounded-1">+ Bulk Create</Button>
           <Button id="rounded-2">+ Create</Button>

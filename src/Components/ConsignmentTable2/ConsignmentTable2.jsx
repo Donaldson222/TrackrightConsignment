@@ -73,6 +73,7 @@ function ConsignmentTable2() {
                 hover
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
+                style={{ position: "relative" }}
               >
                 <TableCell>
                   {val.consigncode}{" "}
@@ -90,22 +91,38 @@ function ConsignmentTable2() {
                 <TableCell>{val.consignor}</TableCell>
                 <TableCell>{val.consignee}</TableCell>
                 <TableCell>{val.location}</TableCell>
-                <TableCell>{val.transporter}</TableCell>
-                <TableCell>
+                <TableCell style={{ position: "relative" }}>
                   <div
-                    className={
-                      hoveredIndex === index
-                        ? "actions-visible"
-                        : "actions-hidden"
-                    }
+                    style={{
+                      display: hoveredIndex === index ? "none" : "block",
+                      whiteSpace: "nowrap",
+                      position: "relative",
+                    
+                    }}
                   >
-                    <Button id="delete-button">
+                    {val.transporter}
+                  </div>
+                </TableCell>
+
+                <TableCell style={{ position: "relative" }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      display: hoveredIndex === index ? "flex" : "none",
+                      gap: "5px",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      height: "20%",
+                    }}
+                  >
+                    <Button id="delete-button" style={{ minWidth: "auto" }}>
                       <MdDeleteOutline />
                     </Button>
-                    <Button id="edit-button">
+                    <Button id="edit-button" style={{ minWidth: "auto" }}>
                       <FaEdit />
                     </Button>
-                    <Button id="copy-button">
+                    <Button id="copy-button" style={{ minWidth: "auto" }}>
                       <IoCopyOutline />
                     </Button>
                   </div>
