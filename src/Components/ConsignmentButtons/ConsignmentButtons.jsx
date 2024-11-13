@@ -158,6 +158,7 @@ function ConsignmentButton() {
                 style={{ display: 'none' }} 
                 ref={fileInputRef} 
             />
+            <div style={{ display: "flex", alignItems: "center" }}>
         <Tooltip title ="Import">
           <Button id="import" onClick={() => fileInputRef.current.click()}>
             <CiImport />
@@ -189,9 +190,15 @@ function ConsignmentButton() {
                 value={filterCriteria} // Controlled input value
                 onChange={handleFilter}
                 
-                style={{ marginBottom: '20px' }} // Styling for spacing
+                style={{  position: 'absolute',  // Keep the input above the filter button
+                  bottom: '40%',        // Position above the button
+                  width: '200px',        // Adjust the width to fit your design
+                  marginBottom: '10px',}} 
             />
           )}
+          </div>
+          </div>
+          
           <div>
       {/* {filteredData.map((item) => (
         <div key={item.consigncode}>
@@ -199,6 +206,7 @@ function ConsignmentButton() {
         </div>
       ))} */}
     </div>
+    <div id="filter-button" style={{ position: 'relative' }}>
             <Tooltip title="Filter">
              <Button id="filter" onClick={() => setShowFilter(!showFilter)} variant="contained" >
               <CiFilter />
