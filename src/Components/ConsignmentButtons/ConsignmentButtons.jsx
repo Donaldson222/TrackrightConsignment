@@ -52,13 +52,24 @@ function ConsignmentButton() {
 
     const [importedData, setImportedData] = useState([]);
     const fileInputRef = useRef(null); 
-    // Filter function
-    const handleFilter = () => {
-        const filtered = data.filter(data => 
-            data.consigncode && data.toLowerCase().includes(filterCriteria.toLowerCase())
-        );
-        setFilteredData(filtered);
+
+    const handleButtonClick = (buttonName) => {
+      setActiveButton(buttonName);
+  };
+
+    const handleFilter = (e) => {
+      const criteria = e.target.value;
+      setFilterCriteria(criteria);
+  
+      const filtered = data.filter(
+        (item) =>
+          item.consigncode.toLowerCase().includes(criteria.toLowerCase()) ||
+          item.priority.toLowerCase().includes(criteria.toLowerCase()) ||
+          item.vehicledriver.toLowerCase().includes(criteria.toLowerCase())
+      );
+      setFilteredData(filtered);
     };
+   
 
     const handleFileImport = (event) => {
       const file = event.target.files[0]; // Get the uploaded file
@@ -77,7 +88,18 @@ function ConsignmentButton() {
       }
   };
 
+  const handleExport = () => {
+    const csvData = importedData.map(item => `${item.id},${item.name}`).join('\n'); // Convert data to CSV format
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' }); // Create a Blob object
+    const url = URL.createObjectURL(blob); // Create a URL for the Blob
 
+    const link = document.createElement('a'); // Create an anchor element
+    link.setAttribute('href', url); // Set the href to the Blob URL
+    link.setAttribute('download', 'exported_data.csv'); // Set the filename for download
+    document.body.appendChild(link); // Append the link to the body
+    link.click(); // Programmatically click the link to trigger the download
+    document.body.removeChild(link); // Remove the link from the document
+};
 
     return (
     <>
@@ -93,25 +115,25 @@ function ConsignmentButton() {
 
         <div style={{ display: "flex" }}>
           <Link to="/consignment-table-2" style={{ textDecoration: "none" }}>
-            <Button id="assigned" onClick={() => handleFilter("Assigned")} style={{
-              background: activeButton === "Assigned" ? "green" : "white", 
-              color: activeButton === "Assigned" ? "white" : "gray", 
-            }}>Assigned</Button>
+            <Button id="assigned"  onClick={() => handleButtonClick('assigned')} style={{
+        background: activeButton === "assigned" ? "green" : "white", 
+        color: activeButton === "assigned" ? "white" : "green", 
+      }}>Assigned</Button>
           </Link>
           <Link to="/consignment-table" style={{ textDecoration: "none" }}>
-            <Button id="unassigned" onClick={() => handleFilter("Unassigned")} style={{
-              background: activeButton === "Unassigned" ? "green" : "white", 
-              color: activeButton === "Unassigned" ? "white" : "grey", 
-            }}>Unassigned</Button>
+            <Button id="unassigned"  onClick={() => handleButtonClick('unassigned')} style={{
+        background: activeButton === "unassigned" ? "green" : "white", 
+        color: activeButton === "unassigned" ? "white" : "green", 
+      }}>Unassigned</Button>
           </Link>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
         <input 
                 type="file" 
-                accept=".csv" // Accept only CSV files
-                onChange={handleFileImport} // Call import function on file change
-                style={{ display: 'none' }} // Hide the file input
-                ref={fileInputRef} // Attach ref to the input
+                accept=".csv" 
+                onChange={handleFileImport} 
+                style={{ display: 'none' }} 
+                ref={fileInputRef} 
             />
         <Tooltip title ="Import">
           <Button id="import" onClick={() => fileInputRef.current.click()}>
@@ -121,7 +143,7 @@ function ConsignmentButton() {
          
           </Tooltip>
           <Tooltip title="Export">
-          <Button id="export">
+          <Button id="export" onClick={handleExport}>
             <CiExport />
           </Button>
           </Tooltip>
@@ -132,19 +154,26 @@ function ConsignmentButton() {
           </Tooltip>
           <div id="filter-button">
          
-          {showFilter ? 'Hide Filter' : 'Show Filter'}
+          
           {showFilter && (
           <TextField
                 label="Filter Consignment Items" // Label for the input
                 variant="outlined" // MUI variant for styling
                 value={filterCriteria} // Controlled input value
-                onClick={() => setShowFilter(!showFilter)}// Update state on change
+                onChange={handleFilter}
                 
                 style={{ marginBottom: '20px' }} // Styling for spacing
             />
           )}
+          <div>
+      {filteredData.map((item) => (
+        <div key={item.consigncode}>
+          <p>{item.consigncode} - {item.vehicledriver} - {item.priority}</p>
+        </div>
+      ))}
+    </div>
             <Tooltip title="Filter">
-             <Button id="filter" onClick={handleFilter} variant="contained" >
+             <Button id="filter" onClick={() => setShowFilter(!showFilter)} variant="contained" >
               <CiFilter />
               
             </Button>
