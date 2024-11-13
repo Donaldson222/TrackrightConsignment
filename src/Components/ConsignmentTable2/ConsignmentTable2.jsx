@@ -97,7 +97,6 @@ function ConsignmentTable2() {
                       display: hoveredIndex === index ? "none" : "block",
                       whiteSpace: "nowrap",
                       position: "relative",
-                    
                     }}
                   >
                     {val.transporter}
@@ -132,7 +131,6 @@ function ConsignmentTable2() {
           </TableBody>
         </Table>
       </TableContainer>
-      
     </div>
   );
 }

@@ -1,15 +1,8 @@
-
 import React, { useState } from "react";
 
-const navData = [
-  { title: "", imgSrc: "trackrright-logo.png" }
- 
-];
+const navData = [{ title: "", imgSrc: "trackrright-logo.png" }];
 
 const Navbar = () => {
-   
-
-
   return (
     <div>
       <ul id="nav-bar">
