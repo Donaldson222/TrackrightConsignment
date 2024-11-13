@@ -132,7 +132,7 @@ function ConsignmentTable2() {
           </TableBody>
         </Table>
       </TableContainer>
-      ;
+      
     </div>
   );
 }

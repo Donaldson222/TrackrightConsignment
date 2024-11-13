@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import React, { useState, useRef } from "react";
 import FilterList from '@mui/icons-material/FilterList';
 
+
+
 const data = [
   {
     consigncode: "123",
@@ -53,6 +55,25 @@ function ConsignmentButton() {
     const [importedData, setImportedData] = useState([]);
     const fileInputRef = useRef(null); 
 
+    const [sortDirection, setSortDirection] = useState("asc"); // Sorting direction
+    const [sortedData, setSortedData] = useState(data);
+
+    const handleSort = () => {
+      const newDirection = sortDirection === "asc" ? "desc" : "asc";
+      setSortDirection(newDirection);
+
+      const sorted = [...sortedData].sort((a, b) => {
+          if (newDirection === "asc") {
+              return a.consigncode.localeCompare(b.consigncode);
+          } else {
+              return b.consigncode.localeCompare(a.consigncode);
+          }
+      });
+
+      setSortedData(sorted);
+  };
+  
+  
     const handleButtonClick = (buttonName) => {
       setActiveButton(buttonName);
   };
@@ -99,6 +120,8 @@ function ConsignmentButton() {
     document.body.appendChild(link); // Append the link to the body
     link.click(); // Programmatically click the link to trigger the download
     document.body.removeChild(link); // Remove the link from the document
+
+    
 };
 
     return (
@@ -148,10 +171,14 @@ function ConsignmentButton() {
           </Button>
           </Tooltip>
           <Tooltip title="Sort">
-          <Button id="sort">
+          <>
+          <Button id="sort" onClick={handleSort}>
             <CgSortAz />
           </Button>
+          
+          </>
           </Tooltip>
+
           <div id="filter-button">
          
           
@@ -166,11 +193,11 @@ function ConsignmentButton() {
             />
           )}
           <div>
-      {filteredData.map((item) => (
+      {/* {filteredData.map((item) => (
         <div key={item.consigncode}>
           <p>{item.consigncode} - {item.vehicledriver} - {item.priority}</p>
         </div>
-      ))}
+      ))} */}
     </div>
             <Tooltip title="Filter">
              <Button id="filter" onClick={() => setShowFilter(!showFilter)} variant="contained" >
