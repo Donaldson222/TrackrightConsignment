@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar"; // Import your Navbar component
-import ConsignmentButtons from "./Components/ConsignmentButtons/ConsignmentButtons"; // Import your buttons component
-import ConsignmentTable from "./Components/ConsignmentTable/ConsignmentTable"; // Import your main consignment table
-import ConsignmentTable2 from "./Components/ConsignmentTable2/ConsignmentTable2"; // Import your second consignment table
+import Navbar from "./Components/Navbar/Navbar"; 
+import ConsignmentButtons from "./Components/ConsignmentButtons/ConsignmentButtons";
+import ConsignmentTable from "./Components/ConsignmentTable/ConsignmentTable"; 
+import ConsignmentTable2 from "./Components/ConsignmentTable2/ConsignmentTable2"; 
 import "./Consignment-style-sheet.css";
 
 function App() {
